@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-heat.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/OSMBuildings-Leaflet.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="data/json_fullMoonRoute3.js"></script>
+        <script src="data/json_CP4.js"></script>
+        <script src="data/json_TheDailyAdventure5.js"></script>
+        <script>
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-26.9297080897,27.2327131396],[-26.9163725695,27.2549069116]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        function setBounds() {
+        }
+        function geoJson2heat(geojson, weight) {
+          return geojson.features.map(function(feature) {
+            return [
+              feature.geometry.coordinates[1],
+              feature.geometry.coordinates[0],
+              feature.properties[weight]
+            ];
+          });
+        }
+        var img_2627cdtrimfin0 = 'data/json_2627cdtrimfin0.png';
+        var img_bounds_2627cdtrimfin0 = [[-27.0000265356,27.2500759366],[-26.8692710377,27.2944634804]];
+        var overlay_2627cdtrimfin0 = new L.imageOverlay(img_2627cdtrimfin0, img_bounds_2627cdtrimfin0);
+        bounds_group.addLayer(overlay_2627cdtrimfin0);
+        raster_group.addLayer(overlay_2627cdtrimfin0);
+        var img_2727AAtrimfin1 = 'data/json_2727AAtrimfin1.png';
+        var img_bounds_2727AAtrimfin1 = [[-27.1383885758,27.0390906752],[-27.0000024643,27.2500518652]];
+        var overlay_2727AAtrimfin1 = new L.imageOverlay(img_2727AAtrimfin1, img_bounds_2727AAtrimfin1);
+        bounds_group.addLayer(overlay_2727AAtrimfin1);
+        raster_group.addLayer(overlay_2727AAtrimfin1);
+        var img_2627cctrimfin2 = 'data/json_2627cctrimfin2.png';
+        var img_bounds_2627cctrimfin2 = [[-26.9999302503,27.0380074651],[-26.8732668795,27.2498833659]];
+        var overlay_2627cctrimfin2 = new L.imageOverlay(img_2627cctrimfin2, img_bounds_2627cctrimfin2);
+        bounds_group.addLayer(overlay_2627cctrimfin2);
+        raster_group.addLayer(overlay_2627cctrimfin2);
+        function pop_fullMoonRoute3(feature, layer) {
+            var popupContent = '<table><tr><td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><td colspan="2"><strong>Leg</strong><br />' + (feature.properties['Leg'] !== null ? Autolinker.link(String(feature.properties['Leg'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStylefullMoonRoute3(feature) {
+            return {
+                weight: 4.24,
+                color: '#ffff01',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0
+            };
+        }
+        map.createPane('pane_fullMoonRoute3');
+        map.getPane('pane_fullMoonRoute3').style.zIndex = 604;
+        var json_fullMoonRoute3JSON = new L.geoJson(json_fullMoonRoute3, {
+            pane: 'pane_fullMoonRoute3',
+            onEachFeature: pop_fullMoonRoute3,
+            style: doStylefullMoonRoute3
+        });
+        bounds_group.addLayer(json_fullMoonRoute3JSON);
+        function pop_CP4(feature, layer) {
+            var popupContent = '<table><tr><td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><td colspan="2"><strong>CP</strong><br />' + (feature.properties['CP'] !== null ? Autolinker.link(String(feature.properties['CP'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        map.createPane('pane_CP4');
+        map.getPane('pane_CP4').style.zIndex = 605;
+        function doStyleCP4() {
+            return {
+                pane: 'pane_CP4',
+                radius: 6.8,
+                fillColor: '#000000',
+                color: '#e31a1c',
+                weight: 2.4,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 0.0
+            }
+        }
+        function doPointToLayerCP4(feature, latlng) {
+            return L.circleMarker(latlng, doStyleCP4()).bindTooltip((feature.properties['CP'] !== null?String('<div style="color: #000000; font-size: 8pt; font-weight: bold; font-family: \'MS Shell Dlg 2\', sans-serif;">' + feature.properties['CP']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_CP4'}).openTooltip();
+        }
+        var json_CP4JSON = new L.geoJson(json_CP4, {
+            pane: 'pane_CP4',
+            onEachFeature: pop_CP4,
+            pointToLayer: doPointToLayerCP4
+            });
+        bounds_group.addLayer(json_CP4JSON);
+        feature_group.addLayer(json_CP4JSON);
+        function pop_TheDailyAdventure5(feature, layer) {
+            var popupContent = '<table><tr><td colspan="2">' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['description'] !== null ? Autolinker.link(String(feature.properties['description'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['timestamp'] !== null ? Autolinker.link(String(feature.properties['timestamp'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['begin'] !== null ? Autolinker.link(String(feature.properties['begin'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['end'] !== null ? Autolinker.link(String(feature.properties['end'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['altitudeMode'] !== null ? Autolinker.link(String(feature.properties['altitudeMode'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['tessellate'] !== null ? Autolinker.link(String(feature.properties['tessellate'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['extrude'] !== null ? Autolinker.link(String(feature.properties['extrude'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['visibility'] !== null ? Autolinker.link(String(feature.properties['visibility'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['drawOrder'] !== null ? Autolinker.link(String(feature.properties['drawOrder'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['icon'] !== null ? Autolinker.link(String(feature.properties['icon'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleTheDailyAdventure5(feature) {
+            return {
+                weight: 4.24,
+                color: '#95317f',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0
+            };
+        }
+        map.createPane('pane_TheDailyAdventure5');
+        map.getPane('pane_TheDailyAdventure5').style.zIndex = 606;
+        var json_TheDailyAdventure5JSON = new L.geoJson(json_TheDailyAdventure5, {
+            pane: 'pane_TheDailyAdventure5',
+            onEachFeature: pop_TheDailyAdventure5,
+            style: doStyleTheDailyAdventure5
+        });
+        bounds_group.addLayer(json_TheDailyAdventure5JSON);
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/TheDailyAdventure5.png" /> The Daily Adventure': json_TheDailyAdventure5JSON,'<img src="legend/CP4.png" /> CP': json_CP4JSON,'<img src="legend/fullMoonRoute3.png" /> full Moon Route': json_fullMoonRoute3JSON,"2627cctrimfin": overlay_2627cctrimfin2,"2727AAtrimfin": overlay_2727AAtrimfin1,"2627cdtrimfin": overlay_2627cdtrimfin0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
